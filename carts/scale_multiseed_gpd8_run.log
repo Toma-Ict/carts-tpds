@@ -1,0 +1,38 @@
+====================================================================================================
+CARTS multi-seed scale test | gpus_per_domain=8 fixed | num_gpus=[32, 64, 128] | seeds=[0, 1, 2, 3, 4, 5] | dpu_bytes_per_us=20500
+====================================================================================================
+
+[n=32] domains=4 cap(seed0)=541  | mode=per-seed cap
+  seed=0 | cap=  541 | C0=   953146 OLD=   786443 NEW=   786443 | OLDvsC0= +17.49% NEWvsC0= +17.49% FixB=  +0.00% | served O/N=8/8
+  seed=1 | cap=  408 | C0=   810858 OLD=   742575 NEW=   676200 | OLDvsC0=  +8.42% NEWvsC0= +16.61% FixB=  +8.94% | served O/N=5/7
+  seed=2 | cap=  498 | C0=   845191 OLD=   723120 NEW=   723120 | OLDvsC0= +14.44% NEWvsC0= +14.44% FixB=  +0.00% | served O/N=6/6
+  seed=3 | cap=  486 | C0=   868078 OLD=   753638 NEW=   753638 | OLDvsC0= +13.18% NEWvsC0= +13.18% FixB=  +0.00% | served O/N=6/6
+  seed=4 | cap=  418 | C0=   669715 OLD=   734944 NEW=   669715 | OLDvsC0=  -9.74% NEWvsC0=  +0.00% FixB=  +8.88% | served O/N=5/7
+  seed=5 | cap=  424 | C0=   716634 OLD=   731894 NEW=   716634 | OLDvsC0=  -2.13% NEWvsC0=  +0.00% FixB=  +2.09% | served O/N=5/7
+
+[n=64] domains=8 cap(seed0)=491  | mode=per-seed cap
+  seed=0 | cap=  491 | C0=  1970142 OLD=  1510468 NEW=  1510468 | OLDvsC0= +23.33% NEWvsC0= +23.33% FixB=  +0.00% | served O/N=21/21
+  seed=1 | cap=  483 | C0=  1312106 OLD=  1309436 NEW=  1265949 | OLDvsC0=  +0.20% NEWvsC0=  +3.52% FixB=  +3.32% | served O/N=23/42
+  seed=2 | cap=  388 | C0=  1166385 OLD=  1291125 NEW=  1166385 | OLDvsC0= -10.69% NEWvsC0=  +0.00% FixB=  +9.66% | served O/N=14/39
+  seed=3 | cap=  474 | C0=  1287691 OLD=  1267854 NEW=  1219792 | OLDvsC0=  +1.54% NEWvsC0=  +5.27% FixB=  +3.79% | served O/N=25/43
+  seed=4 | cap=  483 | C0=  1241917 OLD=  1292649 NEW=  1210637 | OLDvsC0=  -4.08% NEWvsC0=  +2.52% FixB=  +6.34% | served O/N=23/43
+  seed=5 | cap=  470 | C0=  1307910 OLD=  1330798 NEW=  1300663 | OLDvsC0=  -1.75% NEWvsC0=  +0.55% FixB=  +2.26% | served O/N=19/43
+
+[n=128] domains=16 cap(seed0)=395  | mode=per-seed cap
+  seed=0 | cap=  395 | C0=  2401196 OLD=  2379450 NEW=  2335968 | OLDvsC0=  +0.91% NEWvsC0=  +2.72% FixB=  +1.83% | served O/N=38/196
+  seed=1 | cap=  406 | C0=  2138366 OLD=  2295906 NEW=  2133026 | OLDvsC0=  -7.37% NEWvsC0=  +0.25% FixB=  +7.09% | served O/N=43/193
+  seed=2 | cap=  486 | C0=  2587739 OLD=  2506859 NEW=  2589646 | OLDvsC0=  +3.13% NEWvsC0=  -0.07% FixB=  -3.30% | served O/N=60/210
+  seed=3 | cap=  402 | C0=  2198631 OLD=  2305443 NEW=  2149046 | OLDvsC0=  -4.86% NEWvsC0=  +2.26% FixB=  +6.78% | served O/N=44/195
+  seed=4 | cap=  404 | C0=  2114715 OLD=  2286370 NEW=  2097169 | OLDvsC0=  -8.12% NEWvsC0=  +0.83% FixB=  +8.28% | served O/N=42/194
+  seed=5 | cap=  396 | C0=  2450789 OLD=  2444681 NEW=  2453078 | OLDvsC0=  +0.25% NEWvsC0=  -0.09% FixB=  -0.34% | served O/N=39/197
+
+====================================================================================================
+SUMMARY (FixBdelta = OLD->NEW gain; the strictly-better-or-equal claim)
+====================================================================================================
+num_gpus |   cap | FixB mean |  FixB min |  FixB max |   FixB>=0 | OLDvsC0 mean
+----------------------------------------------------------------------------------------------------
+      32 |   541 |    +3.32% |    +0.00% |    +8.94% |      6/6 |       +6.94%
+      64 |   491 |    +4.23% |    +0.00% |    +9.66% |      6/6 |       +1.42%
+     128 |   395 |    +3.39% |    -3.30% |    +8.28% |      4/6 |       -2.68%
+
+[saved] /workspace/astra-sim/carts/scale_multiseed_results.csv (18 rows)

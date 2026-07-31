@@ -1,0 +1,6 @@
+config,description,layer1_max_load,layer1_pct_vs_c0,layer2_cycles,layer2_pct_vs_c0
+C0,baseline,632.0,0.0,953146.0,0.0
+C2,"placement only, dedup off",632.0,0.0,953146.0,0.0
+C1,random relay + dedup (5 draws),598.0,5.38,895315.0,6.07
+C3n,naive placement (Alg 1) + dedup,466.0,26.27,786443.0,17.49
+C3c,cost-aware placement (Alg 2) + dedup,466.0,26.27,786443.0,17.49

@@ -1,0 +1,22 @@
+
+[n=64] domains=4 cap(seed0)=1022  | mode=per-seed cap
+  seed=0 | cap= 1022 | C0=  2074286 OLD=  1573035 NEW=  1573035 | OLDvsC0= +24.16% NEWvsC0= +24.16% FixB=  +0.00% | served O/N=6/6
+  seed=1 | cap=  880 | C0=  1389930 OLD=  1395269 NEW=  1381919 | OLDvsC0=  -0.38% NEWvsC0=  +0.58% FixB=  +0.96% | served O/N=5/7
+  seed=2 | cap=  947 | C0=  1489492 OLD=  1483771 NEW=  1433035 | OLDvsC0=  +0.38% NEWvsC0=  +3.79% FixB=  +3.42% | served O/N=5/7
+  seed=3 | cap=  985 | C0=  1656958 OLD=  1436851 NEW=  1436851 | OLDvsC0= +13.28% NEWvsC0= +13.28% FixB=  +0.00% | served O/N=6/6
+  seed=4 | cap=  904 | C0=  1531453 OLD=  1406712 NEW=  1303716 | OLDvsC0=  +8.15% NEWvsC0= +14.87% FixB=  +7.32% | served O/N=7/7
+  seed=5 | cap=  834 | C0=  1435705 OLD=  1392980 NEW=  1435705 | OLDvsC0=  +2.98% NEWvsC0=  +0.00% FixB=  -3.07% | served O/N=4/7
+
+[n=128] domains=8 cap(seed0)=754  | mode=per-seed cap
+  seed=0 | cap=  754 | C0=  2503818 OLD=  2565612 NEW=  2355809 | OLDvsC0=  -2.47% NEWvsC0=  +5.91% FixB=  +8.18% | served O/N=10/38
+  seed=1 | cap=  766 | C0=  2329108 OLD=  2509919 NEW=  2326438 | OLDvsC0=  -7.76% NEWvsC0=  +0.11% FixB=  +7.31% | served O/N=11/41
+  seed=2 | cap= 1003 | C0=  3780598 OLD=  2987902 NEW=  2987902 | OLDvsC0= +20.97% NEWvsC0= +20.97% FixB=  +0.00% | served O/N=25/27
+  seed=3 | cap=  766 | C0=  2343601 OLD=  2532809 NEW=  2271887 | OLDvsC0=  -8.07% NEWvsC0=  +3.06% FixB= +10.30% | served O/N=11/37
+  seed=4 | cap=  762 | C0=  2240606 OLD=  2462236 NEW=  2196355 | OLDvsC0=  -9.89% NEWvsC0=  +1.97% FixB= +10.80% | served O/N=10/40
+  seed=5 | cap=  939 | C0=  2506490 OLD=  2617493 NEW=  2506490 | OLDvsC0=  -4.43% NEWvsC0=  +0.00% FixB=  +4.24% | served O/N=20/42
+
+[saved] /workspace/astra-sim/carts/scale_multiseed_gpd16_results.csv (12 rows)
+
+   n  dom | NEWvsC0 mean | NEW>=C0 | OLDvsC0 mean | cap=0
+  64    4 |       +9.45% | 6/6   |       +8.09% | 0/6
+ 128    8 |       +5.34% | 6/6   |       -1.94% | 0/6

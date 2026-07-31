@@ -1,0 +1,40 @@
+====================================================================================================
+CARTS multi-seed scale test | gpus_per_domain=4 fixed | num_gpus=[128, 256, 512] | seeds=[0, 1, 2, 3, 4, 5] | dpu_bytes_per_us=20500
+====================================================================================================
+
+[n=128] domains=32 cap(seed0)=203  (held fixed across seeds [0, 1, 2, 3, 4, 5])
+  seed=0 | cap=  203 | C0=  2143701 OLD=  2203573 NEW=  2133783 | OLDvsC0=  -2.79% NEWvsC0=  +0.46% FixB=  +3.17% | served O/N=108/814
+  seed=1 | cap=  203 | C0=  2099066 OLD=  2186791 NEW=  2096016 | OLDvsC0=  -4.18% NEWvsC0=  +0.15% FixB=  +4.15% | served O/N=103/810
+  seed=2 | cap=  203 | C0=  2487787 OLD=  2384009 NEW=  2484354 | OLDvsC0=  +4.17% NEWvsC0=  +0.14% FixB=  -4.21% | served O/N=90/845
+  seed=3 | cap=  203 | C0=  2135311 OLD=  2203193 NEW=  2134548 | OLDvsC0=  -3.18% NEWvsC0=  +0.04% FixB=  +3.12% | served O/N=103/834
+  seed=4 | cap=  203 | C0=  2087242 OLD=  2182212 NEW=  2086479 | OLDvsC0=  -4.55% NEWvsC0=  +0.04% FixB=  +4.39% | served O/N=101/829
+  seed=5 | cap=  203 | C0=  2153236 OLD=  2223412 NEW=  2148659 | OLDvsC0=  -3.26% NEWvsC0=  +0.21% FixB=  +3.36% | served O/N=99/819
+  [ANCHOR OK n=128] seed0 reproduces S15c (cap=203, FixB=+3.17%).
+
+[n=256] domains=64 cap(seed0)=0  (held fixed across seeds [0, 1, 2, 3, 4, 5])
+[n=256] NOTE: pick_cap returned 0 -- no load-level C1/C3 separation at this scale (S14b Bug-2 fallback). This is itself a finding: dedup window collapses under domain dilution. Proceeding (OLD==C0==NEW expected -- documents the collapse).
+  seed=0 | cap=    0 | C0=  4121607 OLD=  4121607 NEW=  4121607 | OLDvsC0=  +0.00% NEWvsC0=  +0.00% FixB=  +0.00% | served O/N=0/0
+  seed=1 | cap=    0 | C0=  4441660 OLD=  4441660 NEW=  4441660 | OLDvsC0=  +0.00% NEWvsC0=  +0.00% FixB=  +0.00% | served O/N=0/0
+  seed=2 | cap=    0 | C0=  4110923 OLD=  4110923 NEW=  4110923 | OLDvsC0=  +0.00% NEWvsC0=  +0.00% FixB=  +0.00% | served O/N=0/0
+  seed=3 | cap=    0 | C0=  4170051 OLD=  4170051 NEW=  4170051 | OLDvsC0=  +0.00% NEWvsC0=  +0.00% FixB=  +0.00% | served O/N=0/0
+  seed=4 | cap=    0 | C0=  4133811 OLD=  4133811 NEW=  4133811 | OLDvsC0=  +0.00% NEWvsC0=  +0.00% FixB=  +0.00% | served O/N=0/0
+  seed=5 | cap=    0 | C0=  4162799 OLD=  4162799 NEW=  4162799 | OLDvsC0=  +0.00% NEWvsC0=  +0.00% FixB=  +0.00% | served O/N=0/0
+
+[n=512] domains=128 cap(seed0)=204  (held fixed across seeds [0, 1, 2, 3, 4, 5])
+  seed=0 | cap=  204 | C0=  8377249 OLD=  8352419 NEW=  8372672 | OLDvsC0=  +0.30% NEWvsC0=  +0.05% FixB=  -0.24% | served O/N=416/7463
+  seed=1 | cap=  204 | C0=  8273108 OLD=  8288339 NEW=  8271583 | OLDvsC0=  -0.18% NEWvsC0=  +0.02% FixB=  +0.20% | served O/N=418/7471
+  seed=2 | cap=  204 | C0=  8181554 OLD=  8275359 NEW=  8177359 | OLDvsC0=  -1.15% NEWvsC0=  +0.05% FixB=  +1.18% | served O/N=417/7513
+  seed=3 | cap=  204 | C0=  8692340 OLD=  8502718 NEW=  8689290 | OLDvsC0=  +2.18% NEWvsC0=  +0.04% FixB=  -2.19% | served O/N=405/7331
+  seed=4 | cap=  204 | C0=  8091907 OLD=  8200591 NEW=  8090381 | OLDvsC0=  -1.34% NEWvsC0=  +0.02% FixB=  +1.34% | served O/N=417/7523
+  seed=5 | cap=  204 | C0=  8108689 OLD=  8205548 NEW=  8106018 | OLDvsC0=  -1.19% NEWvsC0=  +0.03% FixB=  +1.21% | served O/N=415/7383
+
+====================================================================================================
+SUMMARY (FixBdelta = OLD->NEW gain; the strictly-better-or-equal claim)
+====================================================================================================
+num_gpus |   cap | FixB mean |  FixB min |  FixB max |   FixB>=0 | OLDvsC0 mean
+----------------------------------------------------------------------------------------------------
+     128 |   203 |    +2.33% |    -4.21% |    +4.39% |      5/6 |       -2.30%
+     256 |     0 |    +0.00% |    +0.00% |    +0.00% |      6/6 |       +0.00%
+     512 |   204 |    +0.25% |    -2.19% |    +1.34% |      4/6 |       -0.23%
+
+[saved] /workspace/astra-sim/carts/scale_multiseed_results.csv (18 rows)

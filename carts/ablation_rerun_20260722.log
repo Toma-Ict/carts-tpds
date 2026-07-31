@@ -1,0 +1,15 @@
+generated 9 configs; running binary...
+
+============================================================
+ABLATION  (Switch_16npus_slow.yml, cap=237, dpu_bytes_per_us=20500)
+============================================================
+  C0 baseline         :    392004 cycles
+  C2 place, no dedup  :    392004 cycles   (+0.00% vs C0)
+  C1 random + dedup   :    353400 cycles   (+9.85% vs C0)  range 344703-362250
+  C3 full CARTS (OLD) :    377508 cycles   (+3.70% vs C0)
+  C3 full CARTS (FixB):    362250 cycles   (+7.59% vs C0)
+------------------------------------------------------------
+  C3 vs C1 (placement value, OLD) : -6.82%
+  C3 vs C2 (dedup value, OLD)     : +3.70%
+  C3 vs C1 (placement value, FixB): -2.50%
+  C3 vs C2 (dedup value, FixB)    : +7.59%
