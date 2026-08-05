@@ -65,8 +65,11 @@ fork with the project scripts under **carts/** and default branch **master**
 Layout differs from the old repo: old CARTS had scripts at root, carts-tpds has
 them under carts/. Copy targets accordingly.
 
-CARTS_STATE.md now lives at the repo root of carts-tpds and carries the full
-S1-S39 history, restored from the archived repo.
+CARTS_STATE.md now lives at the repo root of carts-tpds. It currently
+contains S39 and S40 only. The archived CARTS repo turned out not to hold the
+S1-S38 history either, so the earlier commit message claiming a full restore
+was wrong. The authoritative S1-S38 record is the copy uploaded to the Claude
+project; reconstructing it here is an open task.
 
 Guardrail: /workspace/carts_repo/ push URL set to DISABLED_archived_repo, so an
 accidental push there fails loudly rather than silently targeting a dead repo.
