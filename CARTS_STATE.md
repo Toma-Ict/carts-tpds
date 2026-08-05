@@ -1,4 +1,5 @@
 
+
 ## S39. Brute-force optimality gap for CRP objective (4a) -- DONE
 
 Section IV-D promised "empirical approximation-ratio measurement against small
@@ -50,4 +51,3 @@ not track.
 **Paper impact.** S/IV-D closing paragraph rewritten (open question -> bounded
 empirically). S/IX(a) gains one sentence after "At marginal pairs the two
 diverge." Net ~0.15 page. Zero new simulation runs.
-
