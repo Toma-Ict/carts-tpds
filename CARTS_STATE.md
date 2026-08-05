@@ -51,25 +51,3 @@ not track.
 **Paper impact.** S/IV-D closing paragraph rewritten (open question -> bounded
 empirically). S/IX(a) gains one sentence after "At marginal pairs the two
 diverge." Net ~0.15 page. Zero new simulation runs.
-
-## S40. Repo migration -- CARTS (archived) -> carts-tpds
-
-The old artifact repo github.com/Toma-Ict/CARTS was archived on GitHub and is
-read-only; three S39 commits could not be pushed and were stranded locally in
-/workspace/carts_repo/.
-
-Active artifact repo is now **github.com/Toma-Ict/carts-tpds**, an ASTRA-sim
-fork with the project scripts under **carts/** and default branch **master**
-(not main). Local clone: /workspace/carts_tpds_repo/.
-
-Layout differs from the old repo: old CARTS had scripts at root, carts-tpds has
-them under carts/. Copy targets accordingly.
-
-CARTS_STATE.md now lives at the repo root of carts-tpds and carries the full
-S1-S39 history, restored from the archived repo.
-
-Guardrail: /workspace/carts_repo/ push URL set to DISABLED_archived_repo, so an
-accidental push there fails loudly rather than silently targeting a dead repo.
-This mirrors the existing guardrail on the /workspace/astra-sim/ clone.
-
-**From here on: push to carts_tpds_repo, branch master.**
