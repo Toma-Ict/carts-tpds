@@ -52,8 +52,8 @@ c4_m = [cell(c4, b) for b in BWS]
 
 fig, ax = plt.subplots(figsize=(3.4, 2.05), constrained_layout=True)
 x = range(len(BWS))
-w = 0.20
-gap = 0.225
+w = 0.14
+gap = 0.17
 
 ax.bar([i - gap for i in x], ca_m, w, color=fig_style.CARTS_BLUE,
        label="CARTS", zorder=3)
