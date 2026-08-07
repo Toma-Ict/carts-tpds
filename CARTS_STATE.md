@@ -76,3 +76,29 @@ accidental push there fails loudly rather than silently targeting a dead repo.
 This mirrors the existing guardrail on the /workspace/astra-sim/ clone.
 
 **From here on: push to carts_tpds_repo, branch master.**
+
+## S41. Figure layout pass for the 18-page ceiling
+
+Fig. 5 (M3 timeline) moved from figure* to figure. The bar chart is wide and
+short, so half width costs no legibility; saves about 0.25 page.
+
+Fig. 10 split in two, because panel (a) is the only place three policies appear
+side by side and is worth keeping, but stacking it above two heatmaps cost most
+of a page:
+
+- fig_necessity_a_1col.py -> panel (a) alone, single column, figsize 3.4x2.05,
+  bar width 0.14 with 0.17 offset, legend above the axes without a frame, short
+  labels, no in-plot title. Placed beside Section VII-D where the -32.7 percent
+  collapse is discussed, so argument and evidence share a page.
+- fig_necessity_bc.py -> the two heatmaps side by side at 7.1x2.35, roughly
+  half the old height. Panel letters renumbered (b),(c) -> (a),(b).
+
+Both are append-only new files. fig_necessity_composite_v2.py is untouched and
+still runs; it is simply no longer included by the paper. Both new scripts carry
+the same anchor gates as v2 and both passed.
+
+Reference impact: \label{fig:necessity} was kept on the heatmap figure so
+existing refs did not break, but every panel letter shifted. Audited across all
+sections: 06_methodology line 36 (Fig. 7 caption) and line 128 (DPU sweep) b->a;
+07_evaluation Table IV caption b--c -> no letter, VII-C b->a, VII-D c->b. The
+bar chart gets its own label, fig:necessity-bw.
