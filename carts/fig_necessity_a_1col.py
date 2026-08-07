@@ -52,13 +52,14 @@ c4_m = [cell(c4, b) for b in BWS]
 
 fig, ax = plt.subplots(figsize=(3.4, 2.05), constrained_layout=True)
 x = range(len(BWS))
-w = 0.27
+w = 0.20
+gap = 0.225
 
-ax.bar([i - w for i in x], ca_m, w, color=fig_style.CARTS_BLUE,
+ax.bar([i - gap for i in x], ca_m, w, color=fig_style.CARTS_BLUE,
        label="CARTS", zorder=3)
 ax.bar(list(x), nv_m, w, color=fig_style.NAIVE_AMBER,
        label="Naive", zorder=3)
-ax.bar([i + w for i in x], c4_m, w, color=fig_style.C4_GRAY,
+ax.bar([i + gap for i in x], c4_m, w, color=fig_style.C4_GRAY,
        label="Always-dedup", zorder=3)
 
 ax.axhline(0, color="black", linewidth=0.6, zorder=2)
@@ -77,5 +78,6 @@ ax.annotate("$-$32.7%", xy=(3.05, -32.7), xytext=(2.30, -24),
             fontsize=7, color=fig_style.NEG_RED, ha="center",
             arrowprops=dict(arrowstyle="->", color=fig_style.NEG_RED, lw=0.7))
 
+ax.set_xlim(-0.55, len(BWS) - 0.45)
 fig.savefig(OUT)
 print("wrote", OUT)
