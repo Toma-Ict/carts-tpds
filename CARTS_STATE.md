@@ -102,3 +102,34 @@ existing refs did not break, but every panel letter shifted. Audited across all
 sections: 06_methodology line 36 (Fig. 7 caption) and line 128 (DPU sweep) b->a;
 07_evaluation Table IV caption b--c -> no letter, VII-C b->a, VII-D c->b. The
 bar chart gets its own label, fig:necessity-bw.
+
+## S42. num_experts sensitivity re-run at the gpd=8 headline config -- DONE
+
+S19's sweep ran at N=16/gpd=4 (the retired config); citing it in the paper's
+Sec. V-A would have stated a headline-config claim from off-config data. Re-run
+via new append-only driver num_experts_sweep_gpd8.py (reuses MoEConfigBlock
+from num_experts_sweep.py, capacity_sweep.max_link_load, demand_extractor --
+none modified). N=32, gpd=8, 4 domains, skew=1.5, E in {32,64,128,256,512}
+(experts/GPU = 1,2,4,8,16), seeds 0-5, load-level cap=inf.
+
+Two anchor gates, both PASS: A1 N=16/gpd=4/E=16 seed0 -> raw=252 dedup=218
+(S7/S19 regression); A2 N=32/gpd=8/E=32 seed0 -> raw_max=632 (S38 locked C0
+L1). A2 additionally reproduced cap=inf dedup_max=466 / 26.27%, matching S39's
+locked 632->466 / -26.27% anchor exactly -- a third independent confirmation.
+
+Per-E means: 17.40 / 17.02 / 19.47 / 18.30 / 18.13 %. BAND 17.0-19.5%, flatter
+than S19's 15.3-20.1% and at the correct config. Seed spread wide (6.95-32.54%)
+and overlapping across all five E values -- flat trend is not seed selection.
+
+Paper: one paragraph appended to Sec. V-A (M1), NOT a Sec. VII subsection.
+Reason: this is load-level (cap=inf); placing a 17-19% load number in the
+cycles section would invite "why is the headline 10.3%" and contradict M3's
+own finding that byte proxies do not predict cycles. Scoped strictly as
+load-level.
+
+Standing caveat NOT closed: the only cycles-level E!=N data point remains S20
+(E=64, +0.00%, Bug 2). Do not state expert-count invariance as a time claim.
+
+Files: num_experts_sweep_gpd8.py, num_experts_sweep_gpd8_results.csv (30 rows).
+Both pushed to carts-tpds (e852c18). num_experts_gpd8_run.log kept on the
+server only; matched by **/*.log in .gitignore.
