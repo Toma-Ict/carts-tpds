@@ -133,3 +133,48 @@ Standing caveat NOT closed: the only cycles-level E!=N data point remains S20
 Files: num_experts_sweep_gpd8.py, num_experts_sweep_gpd8_results.csv (30 rows).
 Both pushed to carts-tpds (e852c18). num_experts_gpd8_run.log kept on the
 server only; matched by **/*.log in .gitignore.
+
+## S43. Fixed-capacity sanity check -- DONE
+
+Motivation: pick_cap() selects, per seed, the capacity maximising the
+C1(random) - C3(greedy) gap on that seed's own demand. The headline
+(scale_multiseed), the ablation (ablation_gpd8_multiseed) and the robustness
+grid (sensitivity_gpd8) all use it, and the paper never discloses the rule.
+That makes capacity an outcome-dependent experimental parameter, so the
+C1-vs-C3b comparison in Sec. VII-E is partly circular as written.
+
+New append-only driver ablation_fixedcap.py repeats the gpd=8 ablation at
+capacities FIXED IN ADVANCE and shared across all six seeds: 400 (below every
+per-seed pick), 600 (above every per-seed pick), and 10**9 (unbounded).
+Imports ablation_gpd8_multiseed unmodified; only the capacity is overridden.
+Its cap-specific anchor gate (cap=541) is deliberately not applied; C0 is
+recomputed per seed and all gains are relative to it.
+
+Setup confirmed: pick_cap's six values reproduce as 541/408/498/486/418/424.
+
+Mean cycles gain vs C0 over seeds 0-5:
+
+  cap        C1       C3n       C3c     C3c min   C3c >= C0
+  400     3.72%     4.10%     3.41%       0.00%        6/6
+  600     7.77%     7.12%    11.65%      +2.79%        6/6
+  1e9     6.30%     6.30%     6.30%     -10.16%        4/6
+
+Three findings, all to be stated in the paper without cherry-picking:
+1. The benefit is not manufactured by pick_cap. Both finite fixed budgets
+   give a positive mean with no seed below baseline.
+2. Ordering only pays where the budget binds but does not strangle. At
+   cap=600 cost-aware is +11.65% against naive's +7.12%, and naive is
+   negative on seeds 4 and 5 (-8.71%, -1.86%) where cost-aware is not.
+   At cap=400 the two are within 0.69 pp and identical on four of six
+   seeds; the budget is too tight for any policy to decide much. Do NOT
+   write "naive wins at cap=400" -- the whole gap is one seed.
+3. Protection needs budget AND ordering together. At cap=1e9 all three
+   policies are bit-identical per seed (ordering is moot once everything
+   is served) and the regressions return, worst seed -10.16%.
+
+Do not promote 11.65% to a new headline. Report all three rows.
+Scope: same six seeds, headline bw/DPU point only. Not hardware-calibrated
+capacity, not the full bandwidth grid.
+
+Files: ablation_fixedcap.py, ablation_fixedcap_results.csv (90 rows).
+ablation_fixedcap_run.log kept on the server only (**/*.log in .gitignore).
