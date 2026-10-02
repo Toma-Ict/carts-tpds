@@ -178,3 +178,64 @@ capacity, not the full bandwidth grid.
 
 Files: ablation_fixedcap.py, ablation_fixedcap_results.csv (90 rows).
 ablation_fixedcap_run.log kept on the server only (**/*.log in .gitignore).
+
+## S44. Repo bookkeeping: S43 correction, PAPER_MAP audit, Fig. 4 legend -- DONE
+
+No simulation re-run, no result CSV touched, no validated script edited.
+
+**1. S43 correction.** S43 says that at cap=400 naive and cost-aware are
+"identical on four of six seeds". Wrong: per ablation_fixedcap_results.csv,
+C3n == C3c (layer2_pct_vs_c0) on THREE seeds, 0, 3 and 5 (all 0.000). Seed 4
+differs (C3n +0.171, C3c 0.000). Every number in S43's table is unchanged;
+only the count was wrong.
+
+**2. PAPER_MAP.md audited against the manuscript.** Numbering checked against
+the current .tex (now targeting FGCS, not TPDS). Fixed:
+- Envelope table is Table VIII, not VII, and its source is scale_multiseed.py
+  at its default GPUS_PER_DOMAIN=4 -> scale_multiseed_gpd4_results.csv
+  (N=128/256/512, seeds 0-5). sweep_any_n_results.csv was listed wrongly and
+  moved to the retired list.
+- Added Table VII (S43 fixed-capacity): ablation_fixedcap.py ->
+  ablation_fixedcap_results.csv.
+- fig_necessity_a_1col.py reads sensitivity_gpd8 + c4_always_dedup, not the
+  ablation CSV; fig_necessity_bc.py also reads c4_always_dedup.
+- Figure numbers after S41's split: old "Fig. 10(a)" is Fig. 10, old
+  "Fig. 10(b,c)" is Fig. 11. Fig. 12 (envelope, fig_envelope_seeds.py ->
+  fig_envelope_seeds_v2.pdf) was missing; added.
+- Fig. 8 confirmed: m1_generalk.pdf (make_m1_generalk_fig.py, data from
+  general_k_validate.py, gpd=8 k=2/3/4 = 31.86/48.88/58.74%) is
+  byte-identical to the paper's fig_gpdeffect.pdf. The repo's own
+  fig_gpdeffect.pdf (make_paper_figures.py) is a different, uncited figure.
+- Fig. 5 values are inlined in fig_timeline_m3.py (provenance in its
+  docstring), not read from dump_lambda_gpd8 output.
+- New note: scale_multiseed.py hard-codes GPUS_PER_DOMAIN=4 and always writes
+  scale_multiseed_results.csv; the _gpd4/_gpd8/_gpd16 names were renamed by
+  hand. Headline (gpd=8) needs GPUS_PER_DOMAIN and SCALE_LIST overridden.
+  scale_multiseed_results.csv == scale_multiseed_gpd4_results.csv byte for
+  byte.
+Byte comparison, repo PDF vs manuscript PDF: Figs. 4, 5, 7, 8, 9, 10, 11, 12
+all identical (Fig. 4 = the OLD m3_scatter.pdf, to be replaced, see 3).
+
+**3. Fig. 4 legend.** make_m3_scatter_fig.py labels the DPU-bound series
+"DPU-bound (r=+0.00)". In all 12 DPU-bound cells the max-link proxy is
+exactly 0.0 (variance 0), so Pearson r is undefined; corr() returns 0.0 when
+a denominator is zero, which produced the label and also let the
+`r_dpu == 0.00` assert pass vacuously. Table II already prints "---" with
+"r is undefined".
+New append-only make_m3_scatter_fig_v2.py imports proxies/corr/fit from v1
+(unmodified), labels the series "DPU-bound (proxy = 0)", and replaces the
+r_dpu assert with `len(DPU-bound) == 12` and `pvariance(proxy) == 0.0`. The
+other asserts are kept (n=72, r_ml 0.56, r_tl 0.64). Output m3_scatter_v2.pdf.
+Run output: full max-link r=+0.556, total-load r=+0.638, transfer-bound
+r=+0.560, forensic cell 0.00% proxy / +16.61% cycles -- unchanged.
+Check: v1 re-rendered under matplotlib 3.10.9 is byte-identical to the
+committed m3_scatter.pdf apart from /CreationDate; the v2 PDF text differs
+from v1 only in the legend string.
+Paper action: replace fig_m3corr.pdf with m3_scatter_v2.pdf.
+
+Also: `__pycache__/` added to .gitignore.
+
+Open (not done, deliberately): figure font unification (matplotlib figures use
+DejaVu Sans, Fig. 3 Arial, Figs. 1 and 6 Times New Roman, Fig. 2 Liberation
+Sans). Deferred until the FGCS template is settled; fig_style.py is not to be
+edited for it.
