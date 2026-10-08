@@ -239,3 +239,24 @@ Open (not done, deliberately): figure font unification (matplotlib figures use
 DejaVu Sans, Fig. 3 Arial, Figs. 1 and 6 Times New Roman, Fig. 2 Liberation
 Sans). Deferred until the FGCS template is settled; fig_style.py is not to be
 edited for it.
+
+## S45. Fig. 12 annotation: drop the Thm 2 attribution -- DONE
+
+No simulation re-run, no result CSV touched, no validated script edited.
+
+fig_envelope_seeds.py (v2 PDF, paper fig_envelope.pdf) annotated the panel
+"means within seed noise (M1 boundary, Thm 2)". Two problems: Thm 2 is the
+gpd=1 boundary (gamma = 0), while this figure is gpd=4; and the paper calls
+the gains "approximately zero" without any statistical test, so "within seed
+noise" was not backed by a test either.
+New append-only fig_envelope_seeds_v3.py: identical to v2 except the
+annotation string, now "all means < 0.15%" (single line, same fontsize 6.5,
+xy (0.97, 0.86), ha right, color), and OUT = fig_envelope_seeds_v3.pdf.
+`diff` v2 vs v3 shows only those two lines. Run prints
+"all anchors verified -- plotting"; the anchor asserts are unchanged.
+Measured means (scale_multiseed_gpd4_results.csv, new_vs_c0, seeds 0-5):
+32 / 64 / 128 domains = 0.142 / 0.034 / 0.018 %. Only negative cell:
+64 domains (256 GPUs) seed 4, -0.037 %.
+PAPER_MAP.md: Fig. 12 now points to v3; v2 moved to the superseded list.
+Paper action: upload fig_envelope_seeds_v3.pdf as fig_envelope.pdf; remove
+any "Theorem 2" / "M1 boundary" wording from the Fig. 12 caption if present.
