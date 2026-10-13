@@ -26,7 +26,7 @@ Table and figure numbers follow the current manuscript (FGCS submission draft).
 | Paper figure | Script -> output | Data | Paper file name |
 |---|---|---|---|
 | Fig. 4 (M3 correlation scatter) | make_m3_scatter_fig_v2.py -> m3_scatter_v2.pdf | sensitivity_gpd8_results.csv | fig_m3corr.pdf |
-| Fig. 5 (M3 timeline, seed 0) | fig_timeline_m3.py -> fig_timeline_m3.pdf | values inlined; provenance in the script docstring (dump_lambda_gpd8.py, ablation CSVs) | fig_timeline_m3.pdf |
+| Fig. 5 (M3 timeline, seed 0) | fig_timeline_m3_v2.py -> fig_timeline_m3_v2.pdf | values inlined; provenance in the script docstring (dump_lambda_gpd8.py, ablation CSVs) | fig_timeline_m3.pdf |
 | Fig. 7 (M2 bandwidth bridge) | fig_bandwidth_bridge_v7.py -> fig_bandwidth_bridge_v7.pdf | sensitivity_gpd8_results.csv | fig_m2roofline.pdf |
 | Fig. 8 (M1 general-k) | make_m1_generalk_fig.py -> m1_generalk.pdf | general_k_validate.py (exact gamma, computed at run time) | fig_gpdeffect.pdf |
 | Fig. 9 (persistence across domain counts) | fig_headline_seeds_v4.py -> fig_headline_seeds_v4.pdf | scale_multiseed_gpd8_results.csv, scale_multiseed_gpd16_results.csv | fig_headline_seeds_v4.pdf |
@@ -80,6 +80,10 @@ byte-identical to `scale_multiseed_gpd4_results.csv`; cite the suffixed file.
   "DPU-bound (r=+0.00)", but the proxy is zero in all 12 DPU-bound cells, so r
   is undefined (corr() silently returns 0.0 on zero variance). Superseded by
   `make_m3_scatter_fig_v2.py` / `m3_scatter_v2.pdf` (S44). Kept unmodified.
+- `fig_timeline_m3.py` / `fig_timeline_m3.pdf` -- annotation "DPU dedup 47 us
+  · overlaps transfer" and x label "link occupancy of the pair". Superseded by
+  `fig_timeline_m3_v2.py` / `fig_timeline_m3_v2.pdf` (S46), which differs only
+  in those two strings and the output name. Kept unmodified.
 - `fig_envelope_seeds.py` / `fig_envelope_seeds_v2.pdf` -- annotation read
   "means within seed noise (M1 boundary, Thm 2)"; Thm 2 is the gpd=1 boundary,
   this figure is gpd=4. Superseded by `fig_envelope_seeds_v3.py` /

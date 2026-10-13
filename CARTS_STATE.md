@@ -260,3 +260,26 @@ Measured means (scale_multiseed_gpd4_results.csv, new_vs_c0, seeds 0-5):
 PAPER_MAP.md: Fig. 12 now points to v3; v2 moved to the superseded list.
 Paper action: upload fig_envelope_seeds_v3.pdf as fig_envelope.pdf; remove
 any "Theorem 2" / "M1 boundary" wording from the Fig. 12 caption if present.
+
+## S46. Fig. 5 wording: DPU bar and x-axis label -- DONE
+
+No simulation re-run, no result CSV touched, no validated script edited.
+
+fig_timeline_m3.py (paper fig_timeline_m3.pdf) had two misleading strings:
+- DPU bar "DPU dedup 47 us · overlaps transfer". In the trace each pair's
+  COMP node precedes its own SEND, so for that pair the DPU work does not
+  overlap its transfer. Now "modeled DPU processing 47 us".
+- x label "link occupancy of the pair (us, at 5 GB/s)". The bars are computed
+  volume / bandwidth, not measured occupancy. Now
+  "pair transfer time (us, volume / 5 GB/s)".
+New append-only fig_timeline_m3_v2.py: `diff` against v1 shows only these two
+strings and the output name (fig_timeline_m3_v2.pdf/.png). All five anchor
+asserts pass; run prints max link 632 -> 466 (-26.27%), cycles
+953146 -> 786443 (-17.49%), same as v1. Bars, colors, arrows, positions and
+font sizes unchanged.
+Note: v1's docstring still says the DPU cost is "small and overlapped"; it is
+a comment only and was left as is in v2 (copy unchanged apart from the two
+strings).
+PAPER_MAP.md: Fig. 5 now points to v2; v1 moved to the superseded list.
+Paper action: upload fig_timeline_m3_v2.pdf as fig_timeline_m3.pdf; check the
+Fig. 5 caption and Sec. V-C text for "overlap" / "occupancy" wording.
