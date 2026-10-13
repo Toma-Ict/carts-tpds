@@ -283,3 +283,27 @@ strings).
 PAPER_MAP.md: Fig. 5 now points to v2; v1 moved to the superseded list.
 Paper action: upload fig_timeline_m3_v2.pdf as fig_timeline_m3.pdf; check the
 Fig. 5 caption and Sec. V-C text for "overlap" / "occupancy" wording.
+
+## S47. CARTS -> CARID label rename in three figures -- DONE
+
+Label rename only. No data, color, layout, font size or variable name changed;
+no simulation re-run, no result CSV touched, no validated script edited.
+
+New append-only copies, each differing from its source only in one visible
+string and the output filename (checked with `diff`):
+- fig_timeline_m3_v2.py -> fig_timeline_m3_v3.py: y-axis group label
+  "CARTS" -> "CARID". Out fig_timeline_m3_v3.pdf/.png. (Paper fig_timeline_m3.pdf)
+- fig_necessity_a_1col.py -> fig_necessity_a_1col_v2.py: legend "CARTS" ->
+  "CARID". Out fig_necessity_a_1col_v2.pdf. (Paper fig_necessity_a_1col.pdf)
+- fig_necessity_bc.py -> fig_necessity_bc_v2.py: panel title
+  "(a) CARTS (cost-aware)" -> "(a) CARID (cost-aware)". Out
+  fig_necessity_bc_v2.pdf. (Paper sections/fig_necessity_bc.pdf)
+All anchor asserts pass (timeline 632 -> 466, -26.27%; cycles -17.49%;
+necessity scripts print "anchors verified").
+pdftotext check: sorted word lists of old vs new PDF differ in exactly one
+token, CARTS -> CARID; no "CARTS" remains. Layout-mode text shows small
+spacing shifts that are not visible in the rendered PDFs (the committed
+originals were rendered under matplotlib 3.10.9, these under 3.11.2);
+side-by-side renders look the same.
+Not changed: the identifier CARTS_BLUE and the assert message "pair 1 must be
+the CARTS bottleneck" (neither is drawn in the figure).
