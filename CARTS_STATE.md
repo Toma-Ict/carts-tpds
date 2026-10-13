@@ -239,3 +239,71 @@ Open (not done, deliberately): figure font unification (matplotlib figures use
 DejaVu Sans, Fig. 3 Arial, Figs. 1 and 6 Times New Roman, Fig. 2 Liberation
 Sans). Deferred until the FGCS template is settled; fig_style.py is not to be
 edited for it.
+
+## S45. Fig. 12 annotation: drop the Thm 2 attribution -- DONE
+
+No simulation re-run, no result CSV touched, no validated script edited.
+
+fig_envelope_seeds.py (v2 PDF, paper fig_envelope.pdf) annotated the panel
+"means within seed noise (M1 boundary, Thm 2)". Two problems: Thm 2 is the
+gpd=1 boundary (gamma = 0), while this figure is gpd=4; and the paper calls
+the gains "approximately zero" without any statistical test, so "within seed
+noise" was not backed by a test either.
+New append-only fig_envelope_seeds_v3.py: identical to v2 except the
+annotation string, now "all means < 0.15%" (single line, same fontsize 6.5,
+xy (0.97, 0.86), ha right, color), and OUT = fig_envelope_seeds_v3.pdf.
+`diff` v2 vs v3 shows only those two lines. Run prints
+"all anchors verified -- plotting"; the anchor asserts are unchanged.
+Measured means (scale_multiseed_gpd4_results.csv, new_vs_c0, seeds 0-5):
+32 / 64 / 128 domains = 0.142 / 0.034 / 0.018 %. Only negative cell:
+64 domains (256 GPUs) seed 4, -0.037 %.
+PAPER_MAP.md: Fig. 12 now points to v3; v2 moved to the superseded list.
+Paper action: upload fig_envelope_seeds_v3.pdf as fig_envelope.pdf; remove
+any "Theorem 2" / "M1 boundary" wording from the Fig. 12 caption if present.
+
+## S46. Fig. 5 wording: DPU bar and x-axis label -- DONE
+
+No simulation re-run, no result CSV touched, no validated script edited.
+
+fig_timeline_m3.py (paper fig_timeline_m3.pdf) had two misleading strings:
+- DPU bar "DPU dedup 47 us · overlaps transfer". In the trace each pair's
+  COMP node precedes its own SEND, so for that pair the DPU work does not
+  overlap its transfer. Now "modeled DPU processing 47 us".
+- x label "link occupancy of the pair (us, at 5 GB/s)". The bars are computed
+  volume / bandwidth, not measured occupancy. Now
+  "pair transfer time (us, volume / 5 GB/s)".
+New append-only fig_timeline_m3_v2.py: `diff` against v1 shows only these two
+strings and the output name (fig_timeline_m3_v2.pdf/.png). All five anchor
+asserts pass; run prints max link 632 -> 466 (-26.27%), cycles
+953146 -> 786443 (-17.49%), same as v1. Bars, colors, arrows, positions and
+font sizes unchanged.
+Note: v1's docstring still says the DPU cost is "small and overlapped"; it is
+a comment only and was left as is in v2 (copy unchanged apart from the two
+strings).
+PAPER_MAP.md: Fig. 5 now points to v2; v1 moved to the superseded list.
+Paper action: upload fig_timeline_m3_v2.pdf as fig_timeline_m3.pdf; check the
+Fig. 5 caption and Sec. V-C text for "overlap" / "occupancy" wording.
+
+## S47. CARTS -> CARID label rename in three figures -- DONE
+
+Label rename only. No data, color, layout, font size or variable name changed;
+no simulation re-run, no result CSV touched, no validated script edited.
+
+New append-only copies, each differing from its source only in one visible
+string and the output filename (checked with `diff`):
+- fig_timeline_m3_v2.py -> fig_timeline_m3_v3.py: y-axis group label
+  "CARTS" -> "CARID". Out fig_timeline_m3_v3.pdf/.png. (Paper fig_timeline_m3.pdf)
+- fig_necessity_a_1col.py -> fig_necessity_a_1col_v2.py: legend "CARTS" ->
+  "CARID". Out fig_necessity_a_1col_v2.pdf. (Paper fig_necessity_a_1col.pdf)
+- fig_necessity_bc.py -> fig_necessity_bc_v2.py: panel title
+  "(a) CARTS (cost-aware)" -> "(a) CARID (cost-aware)". Out
+  fig_necessity_bc_v2.pdf. (Paper sections/fig_necessity_bc.pdf)
+All anchor asserts pass (timeline 632 -> 466, -26.27%; cycles -17.49%;
+necessity scripts print "anchors verified").
+pdftotext check: sorted word lists of old vs new PDF differ in exactly one
+token, CARTS -> CARID; no "CARTS" remains. Layout-mode text shows small
+spacing shifts that are not visible in the rendered PDFs (the committed
+originals were rendered under matplotlib 3.10.9, these under 3.11.2);
+side-by-side renders look the same.
+Not changed: the identifier CARTS_BLUE and the assert message "pair 1 must be
+the CARTS bottleneck" (neither is drawn in the figure).
